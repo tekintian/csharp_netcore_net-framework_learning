@@ -46,10 +46,7 @@ namespace LearnCSharp
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            var name = 9;
-            string[] strs={"aaaa","bbbb"};
-
-            Console.WriteLine($"Tuple with elements {name} and {strs[0]}");
+           
         }
     }
 }

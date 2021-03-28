@@ -35,9 +35,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(240, 214);
+            this.button1.Location = new System.Drawing.Point(256, 210);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(112, 31);
             this.button1.TabIndex = 0;
             this.button1.Text = "Demo";
             this.button1.UseVisualStyleBackColor = true;
@@ -45,7 +45,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(230, 117);
+            this.button2.Location = new System.Drawing.Point(103, 210);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(116, 31);
             this.button2.TabIndex = 1;
