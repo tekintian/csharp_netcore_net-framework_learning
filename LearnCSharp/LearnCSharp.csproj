@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LearnCSharp</RootNamespace>
     <AssemblyName>LearnCSharp</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -150,6 +150,7 @@
     <Compile Include="RegexDemo.Designer.cs">
       <DependentUpon>RegexDemo.cs</DependentUpon>
     </Compile>
+    <Compile Include="security\MyMd5.cs" />
     <EmbeddedResource Include="BaseForm1.resx">
       <DependentUpon>BaseForm1.cs</DependentUpon>
     </EmbeddedResource>

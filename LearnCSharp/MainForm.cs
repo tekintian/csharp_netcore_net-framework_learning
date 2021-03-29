@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LearnCSharp.security;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -46,7 +47,19 @@ namespace LearnCSharp
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-           
+            string name = "Tekin";
+            Console.WriteLine($"你的名称是{name} 算术运算:{2*90/8}");
+            textBox1.Text = $"你的名称是{name} 算术运算:{2 * 90 / 8}";
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string txt = textBox1.Text;
+            string salt = textBox_salt.Text.Trim().Length > 0 ? textBox_salt.Text.Trim() :"";
+            int repeatNum = textBox_repeatNum.Text.Trim().Length > 0 ? Convert.ToInt32(textBox_repeatNum.Text.Trim()) : 1;
+            string cipherTxt = MyMd5.GetMd5(txt,salt,repeatNum);
+            textBox2.Text = cipherTxt;
+
         }
     }
 }
