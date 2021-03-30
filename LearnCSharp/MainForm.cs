@@ -1,4 +1,5 @@
 ﻿using LearnCSharp.security;
+using LearnCSharp.Tools;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -50,6 +51,13 @@ namespace LearnCSharp
             string name = "Tekin";
             Console.WriteLine($"你的名称是{name} 算术运算:{2*90/8}");
             textBox1.Text = $"你的名称是{name} 算术运算:{2 * 90 / 8}";
+
+            comboBox1.SelectedIndex = 1;//默认SHA256加密
+
+
+            // 递归演示
+           other.RecursionDemo.demo();
+
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -57,9 +65,31 @@ namespace LearnCSharp
             string txt = textBox1.Text;
             string salt = textBox_salt.Text.Trim().Length > 0 ? textBox_salt.Text.Trim() :"";
             int repeatNum = textBox_repeatNum.Text.Trim().Length > 0 ? Convert.ToInt32(textBox_repeatNum.Text.Trim()) : 1;
-            string cipherTxt = MyMd5.GetMd5(txt,salt,repeatNum);
+            string type = comboBox1.SelectedItem.ToString();
+
+            string cipherTxt = MyHash.GetHash(txt, type, salt, repeatNum);
+  
             textBox2.Text = cipherTxt;
 
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            ExcelHandlerForm1 ehf = new ExcelHandlerForm1();
+            ehf.Show();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            string txt = textBox1.Text.Trim();
+            string pinyin =  TinyPinyin.PinyinHelper.GetPinyin(txt, "");
+            textBox2.Text = pinyin.ToLower();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            TreeViewForm1 tvf = new TreeViewForm1();
+            tvf.Show();
         }
     }
 }
