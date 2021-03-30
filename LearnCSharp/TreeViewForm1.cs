@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 
@@ -10,12 +11,10 @@ namespace LearnCSharp
         {
             InitializeComponent();
         }
-
         private void TreeViewForm1_Load(object sender, EventArgs e)
         {
-            LoadData(treeView1.Nodes, 0);
+           //
         }
-
         private void LoadData(TreeNodeCollection nodes, int pid)
         {
             DataTable dt = GetDataTableByPid(pid);
@@ -39,6 +38,49 @@ namespace LearnCSharp
             string sql = "select id, name from tb_area where pid=@pid";
 
             return Tools.SqlHelper.ExecuteDataTable(sql,CommandType.Text, new System.Data.SqlClient.SqlParameter("@pid", DbType.Int32) { Value = pid });
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            LoadData(treeView1.Nodes, 0);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //获取选中的当前节点
+            if (treeView1.SelectedNode != null)
+            {
+                //2. 获取选中当前节点对应的id
+                int id = (int)treeView1.SelectedNode.Tag;
+                //3.从数据库中删除
+                RecussionDel(id);
+                // 4. 从界面上删除
+                treeView1.SelectedNode.Remove();
+                treeView1.SelectedNode = null;
+
+                MessageBox.Show("删除成功", "OK");
+            }
+            else
+            {
+                MessageBox.Show("请先选择数据", "Fail");
+            }
+
+        }
+        // 递归删除
+        private int RecussionDel(int id) {
+
+            DataTable dt = GetDataTableByPid(id);
+            if (dt.Rows.Count>0)
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    //递归删除
+                    RecussionDel(Convert.ToInt32(row[0]));
+                }
+            }
+
+            string sql = "delete from tb_area where id=@id";
+           return Tools.SqlHelper.ExecuteNonQuery(sql, CommandType.Text, new System.Data.SqlClient.SqlParameter("@id", DbType.Int32) { Value = id });
         }
     }
 }

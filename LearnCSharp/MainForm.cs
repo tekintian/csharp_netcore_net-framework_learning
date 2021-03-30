@@ -35,8 +35,6 @@ namespace LearnCSharp
            {
                MessageBox.Show("你点击了Cancel");
            }
-
-            
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -53,7 +51,6 @@ namespace LearnCSharp
             textBox1.Text = $"你的名称是{name} 算术运算:{2 * 90 / 8}";
 
             comboBox1.SelectedIndex = 1;//默认SHA256加密
-
 
             // 递归演示
            other.RecursionDemo.demo();
