@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using TekinMssqlFLib;
 
 namespace ConsoleApp1
 {
@@ -7,8 +8,8 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            string sql = "select name from tb_area";
-            object obj = TekinMssqlHelperNF.SqlHelper.ExecuteScalar(sql);
+            string sql = "select id from tb_area";
+            object obj = SqlHelper.ExecuteScalar(sql);
             Console.WriteLine(obj);
 
 
@@ -42,7 +43,7 @@ namespace ConsoleApp1
             }
             string txt = "123";
             //调用自定义的类库
-            string cipher = TekinTianLibrary.security.MyHash.GetHash(txt);
+            string cipher = TekinFLib.Security.MyHash.GetHash(txt);
 
             Console.WriteLine($" {txt}加密后的字符串为{cipher}");
 
