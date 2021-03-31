@@ -1,5 +1,15 @@
 # .NET Core / .NET Framework / .NET Standard 
-Microsoft .NET  netcore csharp earning demo
+Microsoft  C#  .NET Core / .NET Framework / .NET Standard   learning  demo
+
+
+
+NC  -->  NET Core  ---> C
+
+NF  -->  NET Frameword  ---> F
+
+NS  -->  NET Standard  ---> S
+
+
 
 
 
