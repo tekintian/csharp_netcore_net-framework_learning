@@ -7,6 +7,12 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
+            string sql = "select name from tb_area";
+            object obj = TekinMssqlHelperNF.SqlHelper.ExecuteScalar(sql);
+            Console.WriteLine(obj);
+
+
+
             // 不能创建实例 应为默认的构造函数被私有化了
             // SingletonClass1 sgt1 = new SingletonClass1();
 
