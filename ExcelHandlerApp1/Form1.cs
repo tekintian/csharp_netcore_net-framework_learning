@@ -1,74 +1,30 @@
-﻿using NPOI.HSSF.UserModel;
-using NPOI.SS.UserModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
+//NPOI 程序包引用
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
 
-namespace LearnCSharp.Tools
+//需要安装程序包 NPOI
+//https://www.nuget.org/packages/NPOI/2.5.2
+
+namespace ExcelHandlerApp1
 {
-    public partial class ExcelHandlerForm1 : Form
+    public partial class Form1 : Form
     {
-        public ExcelHandlerForm1()
+        public Form1()
         {
             InitializeComponent();
         }
 
-        private void ExcelHandlerForm1_Load(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e)
         {
 
-
-        }
-        //保存excel
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //保存文件对话框
-            SaveFileDialog dlg = new SaveFileDialog();
-            dlg.DefaultExt = ".xls";//默认后缀 xsl
-            //支持的文件后缀  xls或者xlsx
-            dlg.Filter = "Excel Worksheets|*.xls;*.xlsx";
-
-            DialogResult result = dlg.ShowDialog();
-
-            // Process open file dialog box results
-            if (result == DialogResult.OK)
-            {
-                // Open document
-                string filename = dlg.FileName;
-
-                //创建并初始化集合
-                List<Person> list = new List<Person>() {
-                    new Person(){Name="张三",Age=19,Email="zs@qq.com" },
-                    new Person(){ Name="李四",Age=20,Email="ls@qq.com"},
-                    new Person(){ Name="王五",Age=15,Email="ww@qq.com"}
-                };
-
-                WriteExcel(filename, list);
-            }
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            //打开文件对话框
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.DefaultExt = ".xls";//默认后缀 xsl
-            //打开对话框支持的文件后缀  xls或者xlsx
-            dlg.Filter = "Excel Worksheets|*.xls;*.xlsx";
-
-            DialogResult result =dlg.ShowDialog();
-
-            // Process open file dialog box results
-            if (result == DialogResult.OK)
-            {
-                // Open document
-                string filename = dlg.FileName;
-                ReadExcel(filename);
-            }
         }
         //将数据导出到excel文件
-        private void WriteExcel(string filename, List<Person> list) {
+        private void WriteExcel(string filename, List<Person> list)
+        {
             //把List集合的内容导出到excel
 
             // 1.创建工作表对象
@@ -97,9 +53,11 @@ namespace LearnCSharp.Tools
         }
 
         //读取excel
-        private void ReadExcel(string filename) {
+        private void ReadExcel(string filename)
+        {
             //创建一个读取对象
-            using (FileStream fs = File.OpenRead(filename)) {
+            using (FileStream fs = File.OpenRead(filename))
+            {
                 //把文件流中的数据读取到workbook对象中
                 IWorkbook workbook = new HSSFWorkbook(fs);
 
@@ -107,15 +65,15 @@ namespace LearnCSharp.Tools
                 for (int i = 0; i < workbook.NumberOfSheets; i++)
                 {
                     //获取每个工作表
-                   ISheet sheet =  workbook.GetSheetAt(i);
+                    ISheet sheet = workbook.GetSheetAt(i);
 
-                   Console.WriteLine("--------{0}-----------",sheet.SheetName);
+                    Console.WriteLine("--------{0}-----------", sheet.SheetName);
 
                     //遍历获取工作表中的每一行
                     for (int r = 0; r <= sheet.LastRowNum; r++)
                     {
                         //获取到工作表中的每一行
-                        IRow  row = sheet.GetRow(r);
+                        IRow row = sheet.GetRow(r);
 
                         /*
                         //注意这里获取单元格的值 需要根据实际的数据类型来获取 如
@@ -142,6 +100,62 @@ namespace LearnCSharp.Tools
                 }
 
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //保存文件对话框
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.DefaultExt = ".xls";//默认后缀 xsl
+            //支持的文件后缀  xls或者xlsx
+            dlg.Filter = "Excel Worksheets|*.xls;*.xlsx";
+
+            DialogResult result = dlg.ShowDialog();
+
+            // Process open file dialog box results
+            if (result == DialogResult.OK)
+            {
+                // Open document
+                string filename = dlg.FileName;
+
+                //创建并初始化集合
+                List<Person> list = new List<Person>() {
+                    new Person(){Name="张三",Age=19,Email="zs@qq.com" },
+                    new Person(){ Name="李四",Age=20,Email="ls@qq.com"},
+                    new Person(){ Name="王五",Age=15,Email="ww@qq.com"}
+                };
+
+                WriteExcel(filename, list);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //打开文件对话框
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.DefaultExt = ".xls";//默认后缀 xsl
+            //打开对话框支持的文件后缀  xls或者xlsx
+            dlg.Filter = "Excel Worksheets|*.xls;*.xlsx";
+
+            DialogResult result = dlg.ShowDialog();
+
+            // Process open file dialog box results
+            if (result == DialogResult.OK)
+            {
+                // Open document
+                string filename = dlg.FileName;
+                ReadExcel(filename);
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            //方法与上面的类似, 不同的就是数据时从数据库中获取来的
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            //...
         }
     }
 }

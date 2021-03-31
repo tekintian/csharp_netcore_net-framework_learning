@@ -3,9 +3,9 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
 
-namespace LearnCSharp.Tools
+namespace TekinTianLibrary.data
 {
-    static class SqlHelper
+    public static class SqlHelper
     {
         // 从配置文件中读取sql链接字符串
         private static readonly string conStr = ConfigurationManager.ConnectionStrings["mssql"].ConnectionString;
@@ -14,7 +14,7 @@ namespace LearnCSharp.Tools
         // CommandType cmdType = CommandType.Text;
 
         // 执行 insert  update  delete 的方法  返回受影响的行数
-        public static int ExecuteNonQuery(string sql, CommandType cmdType=CommandType.Text, params SqlParameter[] pms)
+        public static int ExecuteNonQuery(string sql, CommandType cmdType = CommandType.Text, params SqlParameter[] pms)
         {
             int ret;
             using (SqlConnection con = new SqlConnection(conStr))
@@ -67,7 +67,7 @@ namespace LearnCSharp.Tools
 
                 using (SqlCommand cmd = new SqlCommand(sql, con))
                 {
-                   try
+                    try
                     {
                         cmd.CommandType = cmdType;
 
@@ -129,10 +129,11 @@ namespace LearnCSharp.Tools
         }
 
         //查询数据并返回DataTable
-        public static DataTable ExecuteDataTable(string sql, CommandType cmdType = CommandType.Text, params  SqlParameter[] pms) 
+        public static DataTable ExecuteDataTable(string sql, CommandType cmdType = CommandType.Text, params SqlParameter[] pms)
         {
             DataTable dt = new DataTable();
-            using (SqlDataAdapter adapter = new SqlDataAdapter(sql, conStr)) {
+            using (SqlDataAdapter adapter = new SqlDataAdapter(sql, conStr))
+            {
                 adapter.SelectCommand.CommandType = cmdType; //设置命令类型
                 if (pms != null)
                 {

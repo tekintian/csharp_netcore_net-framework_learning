@@ -1,13 +1,5 @@
 ﻿using LearnCSharp.security;
-using LearnCSharp.Tools;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LearnCSharp
@@ -72,8 +64,7 @@ namespace LearnCSharp
 
         private void button4_Click(object sender, EventArgs e)
         {
-            ExcelHandlerForm1 ehf = new ExcelHandlerForm1();
-            ehf.Show();
+           
         }
 
         private void button5_Click(object sender, EventArgs e)

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 
@@ -37,7 +36,7 @@ namespace LearnCSharp
         private DataTable GetDataTableByPid(int pid) {
             string sql = "select id, name from tb_area where pid=@pid";
 
-            return Tools.SqlHelper.ExecuteDataTable(sql,CommandType.Text, new System.Data.SqlClient.SqlParameter("@pid", DbType.Int32) { Value = pid });
+            return data.SqlHelper.ExecuteDataTable(sql,CommandType.Text, new System.Data.SqlClient.SqlParameter("@pid", DbType.Int32) { Value = pid });
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -80,7 +79,7 @@ namespace LearnCSharp
             }
 
             string sql = "delete from tb_area where id=@id";
-           return Tools.SqlHelper.ExecuteNonQuery(sql, CommandType.Text, new System.Data.SqlClient.SqlParameter("@id", DbType.Int32) { Value = id });
+           return data.SqlHelper.ExecuteNonQuery(sql, CommandType.Text, new System.Data.SqlClient.SqlParameter("@id", DbType.Int32) { Value = id });
         }
     }
 }

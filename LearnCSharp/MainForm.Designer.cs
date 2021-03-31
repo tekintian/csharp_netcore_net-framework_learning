@@ -44,14 +44,13 @@
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(67, 364);
+            this.button1.Location = new System.Drawing.Point(83, 308);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(112, 31);
             this.button1.TabIndex = 0;
@@ -179,7 +178,7 @@
             this.groupBox1.Controls.Add(this.textBox_repeatNum);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(493, 22);
+            this.groupBox1.Location = new System.Drawing.Point(331, 37);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(402, 362);
             this.groupBox1.TabIndex = 13;
@@ -196,21 +195,11 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(67, 170);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(112, 31);
-            this.button4.TabIndex = 14;
-            this.button4.Text = "Excel操作";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(81, 275);
+            this.button6.Location = new System.Drawing.Point(67, 172);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.Size = new System.Drawing.Size(137, 34);
             this.button6.TabIndex = 15;
             this.button6.Text = "TreeView演示";
             this.button6.UseVisualStyleBackColor = true;
@@ -220,9 +209,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(907, 616);
+            this.ClientSize = new System.Drawing.Size(775, 468);
             this.Controls.Add(this.button6);
-            this.Controls.Add(this.button4);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -252,7 +240,6 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
     }
