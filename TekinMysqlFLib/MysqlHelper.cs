@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 using System.Data;
-using System.Text;
 using System.Configuration;
 
 namespace TekinMysqlFLib
 {
-    class MysqlHelper
+    public static class MysqlHelper
     {
         /*
          * App.config配置信息
@@ -18,187 +14,159 @@ namespace TekinMysqlFLib
 	      </connectionStrings>
         */
         //从App.config配置文件获取mysql的配置信息
-        public static readonly string ConnStr = ConfigurationManager.ConnectionStrings["mysql"].ConnectionString;
-        public static DataTable GetDataTable(string sql)
+        // public static readonly string conStr = "server=192.168.2.8;user=netdemo;password=netdemo888;database=netdemo;charset=utf8;Allow User Variables=true";
+        public static readonly string conStr = ConfigurationManager.ConnectionStrings["mysql"].ConnectionString;
+        public static DataTable ExecuteDatatable(string sql,CommandType comType = CommandType.Text, params MySqlParameter[] pms)
         {
-            DataTable dt = new DataTable();
-            MySqlConnection conn = new MySqlConnection(ConnStr);
-            try
+            using (MySqlConnection conn = new MySqlConnection(conStr))
             {
-                MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
-                adapter.Fill(dt);
-            }
-            catch
-            {
-                ;
-            }
-            finally
-            {
-                conn.Close();
-                conn.Dispose();
-                conn = null;
+                using (MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn))
+                {
+                    DataTable dt = new DataTable();
+                    if (pms !=null)
+                    {
+                        adapter.SelectCommand.Parameters.AddRange(pms);
+                    }
+                    //设置命令类型 默认Text
+                    adapter.SelectCommand.CommandType = comType;
+                    // 填充数据
+                    adapter.Fill(dt);
+
+                    return dt;
+                }
             }
 
-            return dt;
         }
-        public static DataRow GetDataRow(string sql)
+        //返回一行数据
+        public static DataRow GetDataRow(string sql, CommandType comType = CommandType.Text, params MySqlParameter[] pms)
         {
             DataRow row = null;
-            DataTable dt = GetDataTable(sql);
-            try
+            using (DataTable dt = ExecuteDatatable(sql,comType,pms))
             {
                 if (dt.Rows.Count > 0)
                     row = dt.Rows[0];
             }
-            finally
-            {
-                dt.Dispose(); dt = null;
-            }
             return row;
         }
-        /// <summary>
-        /// 执行 Insert Delete Update
-        /// </summary>
-        /// <param name="sql">SQL语句</param>
-        /// <param name="paramNames">参数名数组</param>
-        /// <param name="paramValues">参数值数组</param>
-        /// <returns>成功-1;失败-0</returns>
-        public static int DoExecute(string sql, string[] paramNames, object[] paramValues)
+
+        public static int ExecuteNonQuery(string sql, CommandType cmdType = CommandType.Text, params MySqlParameter[] pms)
         {
-            if (paramNames != null)
+            int ret;
+            using (MySqlConnection con = new MySqlConnection(conStr))
             {
-                if (paramNames.Length != paramValues.Length)
+                using (MySqlCommand cmd = new MySqlCommand(sql, con))
                 {
-                    return 0;
-                }
-            }
-            int ret = 0;
-            MySqlConnection conn = new MySqlConnection(ConnStr);
-            MySqlCommand cmd = new MySqlCommand(sql, conn);
-            cmd.Parameters.Clear();
-            cmd.CommandText = sql;
-            try
-            {
-                if (paramNames != null)
-                {
-                    for (int i = 0; i < paramNames.Length; i++)
+                    try
                     {
-                        MySqlParameter param = null;
-                        if (paramValues[i] != null)
+                        cmd.CommandType = cmdType;
+
+                        //判断是否有参数,有则增加参数
+                        if (null != pms)
                         {
-                            param = new MySqlParameter(paramNames[i], paramValues[i]);
+                            cmd.Parameters.AddRange(pms);
                         }
-                        else
-                        {
-                            if (paramNames[i].ToUpper().Contains("F_SYMBOL"))
-                            {
-                                param = new MySqlParameter(paramNames[i], SqlDbType.Image);
-                                param.Value = DBNull.Value;
-                            }
-                            else if (paramNames[i].ToUpper().Contains("F_PHOTO"))
-                            {
-                                param = new MySqlParameter(paramNames[i], SqlDbType.Image);
-                                param.Value = DBNull.Value;
-                            }
-                            else
-                            {
-                                param = new MySqlParameter(paramNames[i], DBNull.Value);
-                            }
-                        }
-                        cmd.Parameters.Add(param);
+
+                        con.Open(); //打开链接
+
+                        ret = Convert.ToInt32(cmd.ExecuteNonQuery());
                     }
+                    catch (Exception e)
+                    {
+                        //关闭链接
+                        con.Close();
+                        con.Dispose();
+                        ret = -2;
+
+                        throw; //把当前catch中捕获的异常抛出给上层调用者
+                        // throw new MyException(e.Message()); // 抛出一个自定义的异常
+                    }
                 }
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                ret = 1;
+
             }
-            catch (Exception err) {; }
-            finally
-            {
-                conn.Close();
-                cmd.Dispose();
-            }
+
             return ret;
         }
-        /// <summary>
-        /// 执行Insert
-        /// </summary>
-        /// <param name="ATable"></param>
-        /// <param name="AFields"></param>
-        /// <param name="AValues"></param>
-        /// <returns></returns>
-        public static int DoInsert(string ATable, string[] AFields, object[] AValues)
+
+        /**
+         * 返回第一行第一例的值  object
+         * string sql  要执行的sql语句
+         * params MySqlParameter[] pms 可变参数数组
+         */
+        public static object ExecuteScalar(string sql, CommandType cmdType = CommandType.Text, params MySqlParameter[] pms)
         {
-            string sql = "Insert into " + ATable + "(";
-            for (int i = 0; i < AFields.Length; i++)
-            {
-                sql += AFields[i] + " ,";
-            }
-            sql = sql.Substring(0, sql.Length - 1) + ") values (";
-            string[] APs = new string[AFields.Length];
+            //定义返回对象
+            object ret;
 
-            for (int i = 0; i < AFields.Length; i++)
+            // 创建链接对象
+            using (MySqlConnection con = new MySqlConnection(conStr))
             {
-                APs[i] = "@AP_" + AFields[i];
 
-                sql += APs[i] + " ,";
-
-            }
-            sql = sql.Substring(0, sql.Length - 1) + ") ";
-            return DoExecute(sql, APs, AValues);
-        }
-        /// <summary>
-        /// 更新数据表
-        /// </summary>
-        /// <param name="ATable"></param>
-        /// <param name="AFields"></param>
-        /// <param name="AValues"></param>
-        /// <param name="ACondFields"></param>
-        /// <param name="ACondValues"></param>
-        /// <returns></returns>
-        public static int DoUpdate(string ATable, string[] AFields, object[] AValues,
-                string[] ACondFields, object[] ACondValues
-            )
-        {
-            string[] APs = new string[AFields.Length + ACondFields.Length];
-            object[] AVs = new object[AValues.Length + ACondValues.Length];
-            string sql = "Update " + ATable + " Set ";
-            for (int i = 0; i < AFields.Length; i++)
-            {
-                APs[i] = "@AF_" + AFields[i];
-                AVs[i] = AValues[i];
-                sql += AFields[i] + " =" + APs[i] + " ,";
-            }
-            sql = sql.Substring(0, sql.Length - 1);
-            if (ACondValues != null)
-            {
-                sql += " where (1>0) ";
-                for (int i = 0; i < ACondFields.Length; i++)
+                using (MySqlCommand cmd = new MySqlCommand(sql, con))
                 {
-                    APs[i + AFields.Length] = "@AP_" + ACondFields[i];
-                    AVs[i + AFields.Length] = ACondValues[i];
-                    sql += " and " + ACondFields[i] + " =" + APs[i + AFields.Length];
+                    try
+                    {
+                        cmd.CommandType = cmdType;
+
+                        if (null != pms)
+                        {
+                            cmd.Parameters.AddRange(pms);
+                        }
+                        con.Open();//打开链接
+                        ret = cmd.ExecuteScalar();
+                    }
+                    catch (Exception e)
+                    {
+                        //如果发生异常,则关闭资源
+                        con.Close();
+                        con.Dispose();
+
+                        ret = null;
+                        throw;
+                    }
                 }
             }
-            return DoExecute(sql, APs, AVs);
-        }
-        public static int DoDelete(string ATable, string[] ACondFields, object[] ACondValues)
-        {
-            string[] APs = new string[ACondFields.Length];
-            object[] AVs = new object[ACondValues.Length];
-            string sql = "Delete From  " + ATable + "  ";
 
-            if (ACondValues != null)
+            return ret;
+        }
+        /*
+        * 注意 reader使用的时候一定要使用using语句来使用, 否则会造成链接和资源无法正确关闭
+        * string sql ="select * from student";
+        * using (SqlDataReader reader=SqlHelper.ExecuteReader(sql,CommandType.Text)){
+        *  if(reader.HasRows) {  while(reader.Read()){   reader["id"]//获取id的值 }    }
+        * }
+        * 
+        */
+        public static MySqlDataReader ExecuteReader(string sql, CommandType cmdType = CommandType.Text, params MySqlParameter[] pms)
+        {
+            //初始化链接 注意这里的 SqlConnection不能使用using 会报 Cannot access a disposed object.错误
+            MySqlConnection con = new MySqlConnection(conStr);
+            using (MySqlCommand cmd = new MySqlCommand(sql, con))
             {
-                sql += " where (1>0) ";
-                for (int i = 0; i < ACondFields.Length; i++)
+                try
                 {
-                    APs[i] = "@AP_" + ACondFields[i];
-                    AVs[i] = ACondValues[i];
-                    sql += " and " + ACondFields[i] + " =" + APs[i];
+                    cmd.CommandType = cmdType;
+
+                    if (null != pms)
+                    {
+                        cmd.Parameters.AddRange(pms);
+                    }
+                    con.Open();
+
+                    // System.Data.CommandBehavior.CloseConnection 表示 执行命令时，关闭关联的 DataReader 对象时，关联的 Connection 对象也会关闭。
+                    return cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+                }
+                catch (Exception e)
+                {
+                    //错误时关闭资源
+                    con.Close();
+                    con.Dispose();
+
+                    throw;
                 }
             }
-            return DoExecute(sql, APs, AVs);
+
         }
+       
     }
 }
