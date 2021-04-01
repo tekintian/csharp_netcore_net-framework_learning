@@ -2,12 +2,28 @@
 
 ##NuGet依赖库安装:
 
-System.Configuration.ConfigurationManager  用于读取项目中的配置文件
 
-System.Data.SQLite.Core 链接驱动库核心包(如果你要安装 System.Data.SQLiteh 这个也是可以的,不过这个会多安装很多的相关依赖包)
 
+### System.Data.SQLite.Core 链接驱动库核心包
+依赖包: 
+Stub.System.Data.SQLite.Core.NetFramework 1.0.113.3
+System.Data.SQLite.Core 1.0.113.7
+
+(如果你要安装 System.Data.SQLiteh 这个也是可以的,不过这个会多安装很多的相关依赖包)
 
 注意: 这里是System.Data.SQLite.Core , 一定要安装的这个包,否则可能出错,  还有System.Data.SQLite包里面有个隐藏的SQLite.Interop类库, 因为只有在编译的时候才会生成, 所以需要在引用本类库的项目中也要使用NuGet安装一个 System.Data.SQLite.Core 驱动库的依赖. 否则运行是会报SQLite.Interop.dll模块无法加载等的错误.
+
+
+### System.Configuration.ConfigurationManager  用于读取项目中的配置文件
+会安装依赖
+System.Security.Principal.Windows.5.0.0
+System.Security.AccessControl.5.0.0
+System.Security.Permissions.5.0.0
+System.Configuration.ConfigurationManager.5.0.0
+
+
+
+
 
 
 ## 调用类库项目App.config配置
