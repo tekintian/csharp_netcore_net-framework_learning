@@ -35,20 +35,28 @@ using System.Web;
 using MySql.Data.MySqlClient;
 using System.Data;
 using System.Text;
- 
-namespace TCalendar.utils
+using System.Configuration;
+
+namespace TekinMysqlFLib
 {
-    public class WebDBServiceMySQL
+    class MysqlHelper
     {
-        public static string ConnStr = "server=127.0.0.1;port=3306;user id=u;password=u;database=u;charset=utf8";
-        public static DataTable GetDataTable(string SQL)
+        /*
+         * App.config配置信息
+         <connectionStrings>
+		   <add name = "mysql" connectionString="Server=192.168.2.8;Port=3306;User ID=netdemo;Password=netdemo888;Database=netdemo;Charset=utf8;" />
+	      </connectionStrings>
+        */
+        //从App.config配置文件获取mysql的配置信息
+        public static readonly string ConnStr = ConfigurationManager.ConnectionStrings["mysql"].ConnectionString;
+        public static DataTable GetDataTable(string sql)
         {
-            DataTable ADt = new DataTable();
-            MySqlConnection AConn = new MySqlConnection(ConnStr);
+            DataTable dt = new DataTable();
+            MySqlConnection conn = new MySqlConnection(ConnStr);
             try
             {
-                MySqlDataAdapter ADp = new MySqlDataAdapter(SQL, AConn);
-                ADp.Fill(ADt);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
+                adapter.Fill(dt);
             }
             catch
             {
@@ -56,91 +64,91 @@ namespace TCalendar.utils
             }
             finally
             {
-                AConn.Close();
-                AConn.Dispose();
-                AConn = null;
+                conn.Close();
+                conn.Dispose();
+                conn = null;
             }
- 
-            return ADt;
+
+            return dt;
         }
-        public static DataRow GetDataRow(string SQL)
+        public static DataRow GetDataRow(string sql)
         {
-            DataRow ARow = null;
-            DataTable ADt = GetDataTable(SQL);
+            DataRow row = null;
+            DataTable dt = GetDataTable(sql);
             try
             {
-                if (ADt.Rows.Count > 0)
-                    ARow = ADt.Rows[0];
+                if (dt.Rows.Count > 0)
+                    row = dt.Rows[0];
             }
             finally
             {
-                ADt.Dispose(); ADt = null;
+                dt.Dispose(); dt = null;
             }
-            return ARow;
+            return row;
         }
         /// <summary>
         /// 执行 Insert Delete Update
         /// </summary>
-        /// <param name="SQL">SQL语句</param>
-        /// <param name="AParaNames">参数名数组</param>
-        /// <param name="AParaValues">参数值数组</param>
+        /// <param name="sql">SQL语句</param>
+        /// <param name="paramNames">参数名数组</param>
+        /// <param name="paramValues">参数值数组</param>
         /// <returns>成功-1;失败-0</returns>
-        public static int DoExecute(string SQL, string[] AParaNames, object[] AParaValues)
+        public static int DoExecute(string sql, string[] paramNames, object[] paramValues)
         {
-            if (AParaNames != null)
+            if (paramNames != null)
             {
-                if (AParaNames.Length != AParaValues.Length)
+                if (paramNames.Length != paramValues.Length)
                 {
                     return 0;
                 }
             }
-            int Ares = 0;
-            MySqlConnection AConn = new MySqlConnection(ConnStr);
-            MySqlCommand Acmd = new MySqlCommand(SQL, AConn);
-            Acmd.Parameters.Clear();
-            Acmd.CommandText = SQL;
+            int ret = 0;
+            MySqlConnection conn = new MySqlConnection(ConnStr);
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.Clear();
+            cmd.CommandText = sql;
             try
             {
-                if (AParaNames != null)
+                if (paramNames != null)
                 {
-                    for (int i = 0; i < AParaNames.Length; i++)
+                    for (int i = 0; i < paramNames.Length; i++)
                     {
-                        MySqlParameter Ap = null;
-                        if (AParaValues[i] != null)
+                        MySqlParameter param = null;
+                        if (paramValues[i] != null)
                         {
-                            Ap = new MySqlParameter(AParaNames[i], AParaValues[i]);
+                            param = new MySqlParameter(paramNames[i], paramValues[i]);
                         }
                         else
                         {
-                            if (AParaNames[i].ToUpper().Contains("F_SYMBOL"))
+                            if (paramNames[i].ToUpper().Contains("F_SYMBOL"))
                             {
-                                Ap = new MySqlParameter(AParaNames[i], SqlDbType.Image);
-                                Ap.Value = DBNull.Value;
+                                param = new MySqlParameter(paramNames[i], SqlDbType.Image);
+                                param.Value = DBNull.Value;
                             }
-                            else if (AParaNames[i].ToUpper().Contains("F_PHOTO"))
+                            else if (paramNames[i].ToUpper().Contains("F_PHOTO"))
                             {
-                                Ap = new MySqlParameter(AParaNames[i], SqlDbType.Image);
-                                Ap.Value = DBNull.Value;
+                                param = new MySqlParameter(paramNames[i], SqlDbType.Image);
+                                param.Value = DBNull.Value;
                             }
                             else
                             {
-                                Ap = new MySqlParameter(AParaNames[i], DBNull.Value);
+                                param = new MySqlParameter(paramNames[i], DBNull.Value);
                             }
                         }
-                        Acmd.Parameters.Add(Ap);
+                        cmd.Parameters.Add(param);
                     }
                 }
-                AConn.Open();
-                Acmd.ExecuteNonQuery();
-                Ares = 1;
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                ret = 1;
             }
-            catch (Exception err) { ;}
+            catch (Exception err) {; }
             finally
             {
-                AConn.Close();
-                Acmd.Dispose();
+                conn.Close();
+                cmd.Dispose();
             }
-            return Ares;
+            return ret;
         }
         /// <summary>
         /// 执行Insert
@@ -151,23 +159,23 @@ namespace TCalendar.utils
         /// <returns></returns>
         public static int DoInsert(string ATable, string[] AFields, object[] AValues)
         {
-            string SQL = "Insert into " + ATable + "(";
+            string sql = "Insert into " + ATable + "(";
             for (int i = 0; i < AFields.Length; i++)
             {
-                SQL += AFields[i] + " ,";
+                sql += AFields[i] + " ,";
             }
-            SQL = SQL.Substring(0, SQL.Length - 1) + ") values (";
+            sql = sql.Substring(0, sql.Length - 1) + ") values (";
             string[] APs = new string[AFields.Length];
- 
+
             for (int i = 0; i < AFields.Length; i++)
             {
                 APs[i] = "@AP_" + AFields[i];
- 
-                SQL += APs[i] + " ,";
- 
+
+                sql += APs[i] + " ,";
+
             }
-            SQL = SQL.Substring(0, SQL.Length - 1) + ") ";
-            return DoExecute(SQL, APs, AValues);
+            sql = sql.Substring(0, sql.Length - 1) + ") ";
+            return DoExecute(sql, APs, AValues);
         }
         /// <summary>
         /// 更新数据表
@@ -184,43 +192,43 @@ namespace TCalendar.utils
         {
             string[] APs = new string[AFields.Length + ACondFields.Length];
             object[] AVs = new object[AValues.Length + ACondValues.Length];
-            string SQL = "Update " + ATable + " Set ";
+            string sql = "Update " + ATable + " Set ";
             for (int i = 0; i < AFields.Length; i++)
             {
                 APs[i] = "@AF_" + AFields[i];
                 AVs[i] = AValues[i];
-                SQL += AFields[i] + " =" + APs[i] + " ,";
+                sql += AFields[i] + " =" + APs[i] + " ,";
             }
-            SQL = SQL.Substring(0, SQL.Length - 1);
+            sql = sql.Substring(0, sql.Length - 1);
             if (ACondValues != null)
             {
-                SQL += " where (1>0) ";
+                sql += " where (1>0) ";
                 for (int i = 0; i < ACondFields.Length; i++)
                 {
                     APs[i + AFields.Length] = "@AP_" + ACondFields[i];
                     AVs[i + AFields.Length] = ACondValues[i];
-                    SQL += " and " + ACondFields[i] + " =" + APs[i + AFields.Length];
+                    sql += " and " + ACondFields[i] + " =" + APs[i + AFields.Length];
                 }
             }
-            return DoExecute(SQL, APs, AVs);
+            return DoExecute(sql, APs, AVs);
         }
         public static int DoDelete(string ATable, string[] ACondFields, object[] ACondValues)
         {
             string[] APs = new string[ACondFields.Length];
             object[] AVs = new object[ACondValues.Length];
-            string SQL = "Delete From  " + ATable + "  ";
- 
+            string sql = "Delete From  " + ATable + "  ";
+
             if (ACondValues != null)
             {
-                SQL += " where (1>0) ";
+                sql += " where (1>0) ";
                 for (int i = 0; i < ACondFields.Length; i++)
                 {
                     APs[i] = "@AP_" + ACondFields[i];
                     AVs[i] = ACondValues[i];
-                    SQL += " and " + ACondFields[i] + " =" + APs[i];
+                    sql += " and " + ACondFields[i] + " =" + APs[i];
                 }
             }
-            return DoExecute(SQL, APs, AVs);
+            return DoExecute(sql, APs, AVs);
         }
     }
 }
