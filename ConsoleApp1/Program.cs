@@ -35,7 +35,8 @@ namespace ConsoleApp1
             for (int i = 0; i < 10; i++)
             {
                 //创建线程
-                Thread t2 = new Thread(new ThreadStart(() => { 
+                Thread t2 = new Thread(new ThreadStart(() =>
+                {
                     SingletonClass2 sgt2 = SingletonClass2.CreateInstance();
                     sgt2.SayHi();
                 }));

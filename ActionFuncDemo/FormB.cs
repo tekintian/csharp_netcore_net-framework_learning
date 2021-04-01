@@ -12,13 +12,13 @@ namespace ActionFuncDemo
         }
         // @see https://docs.microsoft.com/zh-cn/dotnet/api/system.func-2?view=net-5.0
         //定义一个事件委托 Func表示的是有返回值的委托  Func<参数值的类型,out 返回值的类型>  
-        public event Func<string,string> UpTxtEvent;
+        public event Func<string, string> UpTxtEvent;
 
         private void button1_Click_1(object sender, EventArgs e)
         {
             //触发事件并接收返回值
             string retstr = UpTxtEvent(textBox1.Text.Trim());
-            
+
             label2.Text = retstr;
         }
 

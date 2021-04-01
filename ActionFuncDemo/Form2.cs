@@ -5,7 +5,7 @@ namespace ActionFuncDemo
 {
     public partial class Form2 : Form
     {
-        public string _str="";
+        public string _str = "";
         public Form2()
         {
             InitializeComponent();
