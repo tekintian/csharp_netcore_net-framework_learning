@@ -6,22 +6,23 @@ namespace LearnNF.Security
     public static class MyHash
     {
         //获取字符串的hash值,支持 sha256或者 md5
-        public static string GetHash(string txt, string type="sha256", string salt = "Tekin", int repeatNum = 1) {
-            
-            string retStr=null;
+        public static string GetHash(string txt, string type = "sha256", string salt = "Tekin", int repeatNum = 1)
+        {
+
+            string retStr = null;
 
             switch (type.ToLower())
             {
                 case "md5":
                     retStr = GetMd5(txt, salt);
-                    if (repeatNum>1)
+                    if (repeatNum > 1)
                     {
                         for (int i = 1; i < repeatNum; i++)
                         {
                             retStr = GetMd5(retStr, salt);
                         }
                     }
-                    
+
                     break;
                 case "sha256":
                 default:
@@ -38,13 +39,15 @@ namespace LearnNF.Security
 
             return retStr;
         }
-        public static string GetMd5(string txt,string salt="Tekin") {
+        public static string GetMd5(string txt, string salt = "Tekin")
+        {
             StringBuilder sb = new StringBuilder();
 
             //创建一个计算MD5值得对象
-            using (MD5 md5 = MD5.Create()) {
+            using (MD5 md5 = MD5.Create())
+            {
                 //把字符串转换为byte数组
-                byte[] bytes = System.Text.Encoding.UTF8.GetBytes(txt+salt);
+                byte[] bytes = System.Text.Encoding.UTF8.GetBytes(txt + salt);
                 //将字符数组转换为字符串
                 //string str = Encoding.UTF8.GetString(bytes);
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace LearnNF.Data
 {
@@ -92,40 +92,43 @@ namespace LearnNF.Data
 
             return ret;
         }
-
+        /*
+               * 注意 reader使用的时候一定要使用using语句来使用, 否则会造成链接和资源无法正确关闭
+               * string sql ="select * from student";
+               * using (SqlDataReader reader=SqlHelper.ExecuteReader(sql,CommandType.Text)){
+               *  if(reader.HasRows) {  while(reader.Read()){   reader["id"]//获取id的值 }    }
+               * }
+               * 
+               */
         public static SqlDataReader ExecuteReader(string sql, CommandType cmdType = CommandType.Text, params SqlParameter[] pms)
         {
-            //初始化一个返回对象
-            SqlDataReader retReader = null;
-            using (SqlConnection con = new SqlConnection(conStr))
+            //初始化链接 注意这里的 SqlConnection不能使用using 会报 Cannot access a disposed object.错误
+            SqlConnection con = new SqlConnection(conStr);
+            using (SqlCommand cmd = new SqlCommand(sql, con))
             {
-                using (SqlCommand cmd = new SqlCommand(sql, con))
+                try
                 {
-                    try
+                    cmd.CommandType = cmdType;
+
+                    if (null != pms)
                     {
-                        cmd.CommandType = cmdType;
-
-                        if (null != pms)
-                        {
-                            cmd.Parameters.AddRange(pms);
-                        }
-                        con.Open();
-
-                        // System.Data.CommandBehavior.CloseConnection 表示 执行命令时，关闭关联的 DataReader 对象时，关联的 Connection 对象也会关闭。
-                        retReader = cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
-
+                        cmd.Parameters.AddRange(pms);
                     }
-                    catch (Exception e)
-                    {
-                        con.Close();
-                        con.Dispose();
+                    con.Open();
 
-                        throw;
-                    }
+                    // System.Data.CommandBehavior.CloseConnection 表示 执行命令时，关闭关联的 DataReader 对象时，关联的 Connection 对象也会关闭。
+                    return cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
                 }
+                catch (Exception e)
+                {
+                    con.Close();
+                    con.Dispose();
 
+                    throw;
+                }
             }
-            return retReader;
+
         }
 
         //查询数据并返回DataTable

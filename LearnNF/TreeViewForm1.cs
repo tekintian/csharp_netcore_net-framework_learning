@@ -14,12 +14,12 @@ namespace LearnNF
         }
         private void TreeViewForm1_Load(object sender, EventArgs e)
         {
-           //
+            //
         }
         private void LoadData(TreeNodeCollection nodes, int pid)
         {
             DataTable dt = GetDataTableByPid(pid);
-            if (dt.Rows.Count>0)
+            if (dt.Rows.Count > 0)
             {
                 //遍历数据并加载到TreeView上面
                 foreach (DataRow row in dt.Rows)
@@ -35,10 +35,11 @@ namespace LearnNF
             }
         }
 
-        private DataTable GetDataTableByPid(int pid) {
+        private DataTable GetDataTableByPid(int pid)
+        {
             string sql = "select id, name from tb_area where pid=@pid";
 
-            return SqlHelper.ExecuteDataTable(sql,CommandType.Text, new System.Data.SqlClient.SqlParameter("@pid", DbType.Int32) { Value = pid });
+            return SqlHelper.ExecuteDataTable(sql, CommandType.Text, new System.Data.SqlClient.SqlParameter("@pid", DbType.Int32) { Value = pid });
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -68,10 +69,11 @@ namespace LearnNF
 
         }
         // 递归删除
-        private int RecussionDel(int id) {
+        private int RecussionDel(int id)
+        {
 
             DataTable dt = GetDataTableByPid(id);
-            if (dt.Rows.Count>0)
+            if (dt.Rows.Count > 0)
             {
                 foreach (DataRow row in dt.Rows)
                 {
@@ -81,7 +83,7 @@ namespace LearnNF
             }
 
             string sql = "delete from tb_area where id=@id";
-           return data.SqlHelper.ExecuteNonQuery(sql, CommandType.Text, new System.Data.SqlClient.SqlParameter("@id", DbType.Int32) { Value = id });
+            return data.SqlHelper.ExecuteNonQuery(sql, CommandType.Text, new System.Data.SqlClient.SqlParameter("@id", DbType.Int32) { Value = id });
         }
     }
 }

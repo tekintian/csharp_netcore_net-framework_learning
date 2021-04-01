@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LearnNF
@@ -21,7 +14,8 @@ namespace LearnNF
         {
             doTransform();
         }
-        private void doTransform(){
+        private void doTransform()
+        {
             if (cbox_from.SelectedIndex != 3)//判断用户输入是否为十六进制数
             {
                 long P_lint_value;//定义长整型变量

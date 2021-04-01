@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace LearnNF
 {
@@ -25,7 +19,8 @@ namespace LearnNF
 
             MatchCollection mcols = Regex.Matches(text, regexp);
             StringBuilder sb = new StringBuilder();
-            foreach (Match m in mcols) {
+            foreach (Match m in mcols)
+            {
                 sb.Append(m.Value + "\n");
             }
             textBox2.Text = sb.ToString();
