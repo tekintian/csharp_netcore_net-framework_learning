@@ -26,7 +26,7 @@ namespace LearnNF.Data
                         cmd.CommandType = cmdType;
 
                         //判断是否有参数,有则增加参数
-                        if (null != pms)
+                        if (pms.Length > 0)
                         {
                             cmd.Parameters.AddRange(pms);
                         }
@@ -71,7 +71,7 @@ namespace LearnNF.Data
                     {
                         cmd.CommandType = cmdType;
 
-                        if (null != pms)
+                        if (pms.Length > 0)
                         {
                             cmd.Parameters.AddRange(pms);
                         }
@@ -110,7 +110,7 @@ namespace LearnNF.Data
                 {
                     cmd.CommandType = cmdType;
 
-                    if (null != pms)
+                    if (pms.Length > 0)
                     {
                         cmd.Parameters.AddRange(pms);
                     }

@@ -21,7 +21,7 @@ namespace TekinSQLiteFLib
                     try
                     {
                       //判断是否有参数,有则增加参数
-                      if (null != pms) cmd.Parameters.AddRange(pms);
+                      if (pms.Length > 0) cmd.Parameters.AddRange(pms);
 
                        con.Open(); //打开链接
                        ret = cmd.ExecuteNonQuery();
@@ -56,7 +56,7 @@ namespace TekinSQLiteFLib
                 {
                     try
                     {
-                        if (null != pms)
+                        if (pms.Length > 0)
                         {
                             cmd.Parameters.AddRange(pms);
                         }
@@ -89,7 +89,7 @@ namespace TekinSQLiteFLib
                 //创建Adapter适配器
                 SQLiteDataAdapter adapter = new SQLiteDataAdapter(sql, con);
                 //如果有参数增加参数
-                if (null != pms)
+                if (pms.Length > 0)
                 {
                     adapter.SelectCommand.Parameters.AddRange(pms);
                 }
@@ -115,7 +115,7 @@ namespace TekinSQLiteFLib
                 //这里使用try catch确保在发生错误时能正确关闭资源
                 try
                 {
-                    if (null != pms) cmd.Parameters.AddRange(pms);
+                    if (pms.Length > 0) cmd.Parameters.AddRange(pms);
 
                     con.Open();
 
