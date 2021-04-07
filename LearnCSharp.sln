@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleNFApp1", "ConsoleNFA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormDemoNFApp1", "FormDemoNFApp1\FormDemoNFApp1.csproj", "{8BFA1D16-3A17-4300-9B87-EC2EB3123AB4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadFrmDemo", "ThreadFrmDemo\ThreadFrmDemo.csproj", "{F32ACFB3-A82F-4CF5-90E7-DC58E3F795CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{8BFA1D16-3A17-4300-9B87-EC2EB3123AB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BFA1D16-3A17-4300-9B87-EC2EB3123AB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BFA1D16-3A17-4300-9B87-EC2EB3123AB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F32ACFB3-A82F-4CF5-90E7-DC58E3F795CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F32ACFB3-A82F-4CF5-90E7-DC58E3F795CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F32ACFB3-A82F-4CF5-90E7-DC58E3F795CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F32ACFB3-A82F-4CF5-90E7-DC58E3F795CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
