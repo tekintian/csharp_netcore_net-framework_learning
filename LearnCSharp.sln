@@ -29,6 +29,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TekinSQLiteFLib", "TekinSQL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TekinMysqlFLib", "TekinMysqlFLib\TekinMysqlFLib.csproj", "{8474B1B7-76E6-403B-A6E3-39B68FF10FB7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleNFApp1", "ConsoleNFApp1\ConsoleNFApp1.csproj", "{AD584C55-00EF-446A-8DB1-E795DB67738A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormDemoNFApp1", "FormDemoNFApp1\FormDemoNFApp1.csproj", "{8BFA1D16-3A17-4300-9B87-EC2EB3123AB4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +91,14 @@ Global
 		{8474B1B7-76E6-403B-A6E3-39B68FF10FB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8474B1B7-76E6-403B-A6E3-39B68FF10FB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8474B1B7-76E6-403B-A6E3-39B68FF10FB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD584C55-00EF-446A-8DB1-E795DB67738A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD584C55-00EF-446A-8DB1-E795DB67738A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD584C55-00EF-446A-8DB1-E795DB67738A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD584C55-00EF-446A-8DB1-E795DB67738A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BFA1D16-3A17-4300-9B87-EC2EB3123AB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BFA1D16-3A17-4300-9B87-EC2EB3123AB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BFA1D16-3A17-4300-9B87-EC2EB3123AB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BFA1D16-3A17-4300-9B87-EC2EB3123AB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
