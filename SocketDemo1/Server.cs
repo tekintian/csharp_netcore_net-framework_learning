@@ -8,11 +8,11 @@ using System.Windows.Forms;
 
 namespace SocketDemo1
 {
-    public partial class Form1 : Form
+    public partial class Server : Form
     {
         private List<Socket> ClientProxySocketList = new List<Socket>();
 
-        public Form1()
+        public Server()
         {
             InitializeComponent();
         }

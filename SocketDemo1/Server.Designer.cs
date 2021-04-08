@@ -1,7 +1,7 @@
 ﻿
 namespace SocketDemo1
 {
-    partial class Form1
+    partial class Server
     {
         /// <summary>
         /// 必需的设计器变量。
