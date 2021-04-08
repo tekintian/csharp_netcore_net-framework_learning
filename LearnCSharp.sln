@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormDemoNFApp1", "FormDemoN
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadFrmDemo", "ThreadFrmDemo\ThreadFrmDemo.csproj", "{F32ACFB3-A82F-4CF5-90E7-DC58E3F795CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketDemo1", "SocketDemo1\SocketDemo1.csproj", "{8B4AEBEF-2020-413F-979D-0FFFC6877A06}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,10 @@ Global
 		{F32ACFB3-A82F-4CF5-90E7-DC58E3F795CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F32ACFB3-A82F-4CF5-90E7-DC58E3F795CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F32ACFB3-A82F-4CF5-90E7-DC58E3F795CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B4AEBEF-2020-413F-979D-0FFFC6877A06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B4AEBEF-2020-413F-979D-0FFFC6877A06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B4AEBEF-2020-413F-979D-0FFFC6877A06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B4AEBEF-2020-413F-979D-0FFFC6877A06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
