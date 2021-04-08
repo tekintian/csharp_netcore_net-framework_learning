@@ -88,7 +88,7 @@ namespace SocketDemo1
             this.textBox_log.Location = new System.Drawing.Point(64, 74);
             this.textBox_log.Multiline = true;
             this.textBox_log.Name = "textBox_log";
-            this.textBox_log.Size = new System.Drawing.Size(371, 196);
+            this.textBox_log.Size = new System.Drawing.Size(356, 189);
             this.textBox_log.TabIndex = 5;
             // 
             // textBox_msg
@@ -113,7 +113,7 @@ namespace SocketDemo1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(617, 476);
+            this.ClientSize = new System.Drawing.Size(582, 476);
             this.Controls.Add(this.btn_send);
             this.Controls.Add(this.textBox_msg);
             this.Controls.Add(this.textBox_log);
