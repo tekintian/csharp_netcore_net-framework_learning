@@ -17,6 +17,7 @@ namespace ThreadFrmDemo
            // Control.CheckForIllegalCrossThreadCalls = false;//项目中不要使用这种方式
 
         }
+
         private void btn_loop_Click(object sender, EventArgs e)
         {
             isRunning = true; //用于控制进程的启动和停止的变量
@@ -64,6 +65,12 @@ namespace ThreadFrmDemo
         private void btn_stop_Click(object sender, EventArgs e)
         {
             isRunning = false;
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+           
+
         }
     }
 }

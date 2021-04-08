@@ -16,7 +16,9 @@ namespace ThreadFrmDemo
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            //Application.Run(new ThreadLockDemo());
+            //Application.Run(new ThreadPoolDemo());
+            Application.Run(new AsyncDelegateDemo());
         }
     }
 }

@@ -49,7 +49,7 @@ namespace ThreadFrmDemo
             // btn_process_info
             // 
             this.btn_process_info.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.btn_process_info.Location = new System.Drawing.Point(425, 62);
+            this.btn_process_info.Location = new System.Drawing.Point(486, 55);
             this.btn_process_info.Name = "btn_process_info";
             this.btn_process_info.Size = new System.Drawing.Size(156, 23);
             this.btn_process_info.TabIndex = 1;
@@ -64,7 +64,7 @@ namespace ThreadFrmDemo
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(116, 23);
             this.button1.TabIndex = 2;
-            this.button1.Text = "打开";
+            this.button1.Text = "打开记事本";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -90,6 +90,7 @@ namespace ThreadFrmDemo
             this.Controls.Add(this.btn_loop);
             this.Name = "MainForm";
             this.Text = "MainForm";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
 
         }
