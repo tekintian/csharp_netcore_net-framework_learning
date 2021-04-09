@@ -70,12 +70,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileContentType.cs" />
     <Compile Include="IMyHttpHandler.cs" />
     <Compile Include="MyConfigUtil.cs" />
     <Compile Include="MyHttpApplication.cs" />
     <Compile Include="MyHttpContext.cs" />
     <Compile Include="MyHttpResponse.cs" />
+    <Compile Include="MyMIMEDict.cs" />
     <Compile Include="MyServer.cs">
       <SubType>Form</SubType>
     </Compile>
