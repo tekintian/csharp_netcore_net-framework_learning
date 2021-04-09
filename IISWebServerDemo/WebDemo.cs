@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IISWebServerDemo
 {
-    public class WebDemo : IHttpHandler
+    public class WebDemo : IMyHttpHandler
     {
         public void ProcessRequest(MyHttpContext context)
         {

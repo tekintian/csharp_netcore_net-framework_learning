@@ -5,7 +5,7 @@ using System.Text;
 
 namespace IISWebServerDemo
 {
-    public class MyHttpApplication:IHttpHandler
+    public class MyHttpApplication:IMyHttpHandler
     {
         public MyHttpApplication()
         {
@@ -20,7 +20,7 @@ namespace IISWebServerDemo
 
            string fileName = Path.Combine(baseWebPath, context.Request.Url.TrimStart('/'));
 
-           string contentType= FileContentType.GetMimeType(Path.GetExtension(context.Request.Url));
+           string contentType= MyMIMEDict.GetType(Path.GetExtension(context.Request.Url));
 
             string dfileName = fileName;
             #region 处理动态文件
@@ -30,7 +30,7 @@ namespace IISWebServerDemo
                 var className = Path.GetFileNameWithoutExtension(context.Request.Url);
 
                 //应为所有的aspx的类都继承了IHttpHandler 所以这里可以将实例化的类型设置为接口类型来接收, 以便使用接口定义的方法
-                IHttpHandler obj = Assembly.Load("IISWebServerDemo").CreateInstance("IISWebServerDemo."+className,true) as IHttpHandler;
+                IMyHttpHandler obj = Assembly.Load("IISWebServerDemo").CreateInstance("IISWebServerDemo."+className,true) as IMyHttpHandler;
                 if (obj!=null)
                 {
                     obj.ProcessRequest(context);

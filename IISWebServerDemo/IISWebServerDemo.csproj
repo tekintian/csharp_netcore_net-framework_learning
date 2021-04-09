@@ -71,7 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileContentType.cs" />
-    <Compile Include="IHttpHandler.cs" />
+    <Compile Include="IMyHttpHandler.cs" />
     <Compile Include="MyConfigUtil.cs" />
     <Compile Include="MyHttpApplication.cs" />
     <Compile Include="MyHttpContext.cs" />

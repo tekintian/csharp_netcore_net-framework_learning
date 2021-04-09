@@ -57,7 +57,7 @@ namespace IISWebServerDemo
             IPEndPoint iPEndPoint = new IPEndPoint(ip, int.Parse(textBox_port.Text));
             serverSocket.Bind(iPEndPoint);
 
-            //3.开启监听 
+            //3.开启监听 10表示等待的队列长度
             serverSocket.Listen(10);
 
             //使用线程池执行监听客户端连接
@@ -83,11 +83,11 @@ namespace IISWebServerDemo
                 //获取请求的报文长度
                 int len = proxySocket.Receive(data,0,data.Length,SocketFlags.None);
 
-                string reqTxt = Encoding.Default.GetString(data);
+                string reqStr = Encoding.Default.GetString(data);
                 //解析 请求报文, 处理请求报文 返回相应的内容
-                // MyHttpRequest request = new MyHttpRequest(reqTxt);
+                // MyHttpRequest request = new MyHttpRequest(reqStr);
 
-                MyHttpContext context = new MyHttpContext(reqTxt);
+                MyHttpContext context = new MyHttpContext(reqStr);
                
                 MyHttpApplication application = new MyHttpApplication();
                 application.ProcessRequest(context);

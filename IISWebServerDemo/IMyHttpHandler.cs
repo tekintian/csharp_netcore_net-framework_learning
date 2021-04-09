@@ -1,6 +1,6 @@
 ﻿namespace IISWebServerDemo
 {
-    public interface IHttpHandler
+    public interface IMyHttpHandler
     {
         void ProcessRequest(MyHttpContext context);
     }
